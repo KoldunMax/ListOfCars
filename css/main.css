@@ -1,0 +1,20 @@
+ .detailed-car-image {
+    height: 200px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.phone-block {
+    height: 36px;
+}
+
+.modal {
+    display: block;
+}
+
+.list-of-logs {
+    height: 200px;
+    overflow-y: auto;
+}
