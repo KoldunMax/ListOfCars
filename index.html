@@ -6,10 +6,12 @@
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' crossorigin='anonymous'>
     <link rel='stylesheet' href='css/main.css'>
+    <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js' defer></script>
+    <script src='js/index.js' defer></script>
     <title>List Of Cars</title>
 </head>
 <body>
-    <div class='container pt-5'>
+    <div class='container pt-5' id='app'>
         <div class='row'>
             <div class='col'>
                 <h1>Cars application</h1>
@@ -19,39 +21,120 @@
             <div class='col-md-4'>
                 <div class='form-group'>
                     <label for='search'>Find your car</label>
-                    <input type='text' class='form-control' id='search' placeholder="name, model...">
+                    <input
+                        type='text'
+                        class='form-control'
+                        id='search'
+                        placeholder='name, model...'
+                        v-model='search'
+                    >
                 </div>
 
                 <hr>
 
-                <ul class="list-group">
-                    <li class='list-group-item list-group-item-action pointer'>1234</li>
-                    <li class='list-group-item list-group-item-action pointer'>1234</li>
-                    <li class='list-group-item list-group-item-action pointer'>1234</li>
+                <ul class='list-group'>
+                    <li 
+                        v-for='(car, index) of searchByCarName'
+                        v-on:click='selectCar(index)'
+                        class='list-group-item list-group-item-action pointer'
+                        :class='{ active: selectedCarIndex === index }'
+                    >
+                        {{ car.name }} - {{car.model}}
+                    </li>
                 </ul>
             </div>
             <div class='col-md-8'>
                 <div class='row'>
                     <div class='col-md-5'>
-                        <h2>BMW 3 Series</h2>
-                        <img src='img/bmw-3-series-image.png' alt='mw-3-series' class='rounded detailed-car-image'>
+                        <h2>{{ currentCar.name }} {{ currentCar.model }}</h2>
+                        <img
+                            v-bind:src='currentCar.image'
+                            v-bind:alt='currentCar.name'
+                            class='rounded detailed-car-image'
+                        >
                     </div>
                     <div class='col-md-7 pt-2'>
                         <h5>Car details</h5>
-
-                        <li>Model - <strong>BMW 3 Series</strong></li>
-                        <li>Year - <strong>1975</strong></li>
-                        <li>Owner - <strong>Max</strong></li>
-                        
-                        <div class='mt-2'>
-                            <button class='btn btn-outline-success mr-3'>Show model</button>
-                            <button class='btn btn-primary'>Buy</button>
+                        <ul>
+                            <li>Model - <strong>{{ currentCar.name }} {{ currentCar.model }}</strong></li>
+                            <li>Year - <strong>{{ currentCar.year }}</strong></li>
+                            <li>Owner - <strong>{{ currentCar.owner }}</strong></li>
+                        </ul>
+                        <div class='phone-block'>
+                            <p v-if='phoneVisibility'>{{ currentCar.phone }}</p>
                         </div>
 
+                        <button
+                            class='btn btn-outline-success mr-3'
+                            v-on:click='phoneVisibility = !phoneVisibility'
+                        >
+                            {{ phoneBtnText }}
+                        </button>
+                        <button
+                            class='btn btn-primary' 
+                            @click='modalVisibility = true'
+                        >
+                            Buy
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="row" v-if='logs.length !== 0'>
+            <div class="col-md-12">
+                <ul class='list-group mt-4 mb-4 list-of-logs'>
+                    <li
+                        v-for='log of logs'
+                        class="list-group-item mt-3"
+                        :class="{'list-group-item-secondary': log.type === 'cnl',
+                                 'list-group-item-success': log.type === 'ok'}"
+                    >
+                        {{ log.text }} {{ log.date | date }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modal fade show" tabindex="-1" role="dialog" v-if='modalVisibility'>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                        @click='modalVisibility = false'
+                    >
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                        @click='cancelOrder'
+                    >
+                        Close
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click='newOrder'
+                    >
+                        Save changes
+                    </button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop fade show" v-if='modalVisibility'></div>
     </div>
 </body>
 </html>
