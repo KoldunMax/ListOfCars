@@ -30,13 +30,13 @@ new Vue({
         cancelOrder: function () {
             this.modalVisibility = false
             this.logs.push(
-                log(`Cancelled order: ${currentCar.name} - ${currentCar.model}`, 'cnl')
+                log(`Cancelled order: ${this.currentCar.name} - ${this.currentCar.model}`, 'cnl')
             )
         },
         newOrder: function () {
             this.modalVisibility = false
             this.logs.push(
-                log(`Success order: ${currentCar.name} - ${currentCar.model}`, 'ok')
+                log(`Success order: ${this.currentCar.name} - ${this.currentCar.model}`, 'ok')
             )
         }
     },
