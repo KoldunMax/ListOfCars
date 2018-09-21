@@ -61,11 +61,13 @@
                             <li>Owner - <strong>{{ currentCar.owner }}</strong></li>
                         </ul>
                         <div class='phone-block'>
-                            <p v-if='phoneVisibility'>{{ currentCar.phone }}</p>
+                            <transition name='phone'>
+                                <p v-if='phoneVisibility'>{{ currentCar.phone }}</p>
+                            </transition>
                         </div>
 
                         <button
-                            class='btn btn-outline-success mr-3'
+                            class='btn btn-outline-success mr-3 btn-show-phone'
                             v-on:click='phoneVisibility = !phoneVisibility'
                         >
                             {{ phoneBtnText }}
@@ -95,46 +97,49 @@
                 </ul>
             </div>
         </div>
-
-        <div class="modal fade show" tabindex="-1" role="dialog" v-if='modalVisibility'>
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                        @click='modalVisibility = false'
-                    >
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-dismiss="modal"
-                        @click='cancelOrder'
-                    >
-                        Close
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        @click='newOrder'
-                    >
-                        Save changes
-                    </button>
-                </div>
+        <transition name='modal'>
+            <div class="modal fade show" tabindex="-1" role="dialog" v-if='modalVisibility'>
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                            @click='modalVisibility = false'
+                        >
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                            @click='cancelOrder'
+                        >
+                            Close
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            @click='newOrder'
+                        >
+                            Save changes
+                        </button>
+                    </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-backdrop fade show" v-if='modalVisibility'></div>
+        </transition>
+        <transition name='fade'>
+            <div class="modal-backdrop fade show" v-if='modalVisibility'></div>
+        </transition>
     </div>
 </body>
 </html>
