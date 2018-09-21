@@ -2,6 +2,10 @@
     height: 200px;
 }
 
+.btn-show-phone {
+    width: 140px;
+}
+
 .pointer {
     cursor: pointer;
 }
@@ -17,4 +21,46 @@
 .list-of-logs {
     height: 200px;
     overflow-y: auto;
+}
+
+.phone-enter-active,
+.modal-enter-active,
+.phone-leave-active,
+.modal-leave-active {
+    transition: all .5s;
+}
+
+.phone-enter,
+.modal-enter,
+.fage-enter,
+.phone-leave-to,
+.modal-leave-to,
+.fade-leave-to {
+    opacity: 0;
+}
+.phone-enter,
+.phone-leave-to {
+    transform: translateX(50px);
+}
+
+.modal-enter,
+.modal-leave-to {
+    transform: translateY(-200px);
+}
+
+.fade-enter-active {
+    animation: .5s fade forwards;
+}
+
+.fade-leave-active {
+    animation: .5s fade reverse;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: .5;
+    }
 }
