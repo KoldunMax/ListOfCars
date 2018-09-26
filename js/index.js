@@ -4,7 +4,7 @@ const car = (name, model, owner, year, phone, image) =>
 const log = (text, type, date = new Date()) => ({text, type, date})
 
 const cars = [
-    car('BMW', '3 Series', 'Max', 1975, '+7 313 123 222 12', 'img/bmw-3-series-image.png'),
+    car('BMW', '3 Series', 'Max', 2012, '+7 313 123 222 12', 'img/bmw-3-series-image.png'),
     car('Ford', 'EcoSport', 'Vlad', 2017, '+7 222 153 222 12', 'img/Ford-EcoSport.jpg'),
     car('Mahindra', 'Kuv100', 'Petya', 2015, '+7 111 123 222 12', 'img/mahindra-kuv100-nxt-image.png')
 ]
